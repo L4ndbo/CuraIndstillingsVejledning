@@ -1,16 +1,16 @@
 {
     "author": {
-        "author_id": "Ghostkeeper",
-        "display_name": "Ghostkeeper",
-        "email": "rubend@tutanota.com",
-        "website": "https://github.com/Ghostkeeper"
+        "author_id": "L4ndbo",
+        "display_name": "L4ndbo",
+        "email": "michael@l4ndbo",
+        "website": "https://github.com/L4ndbo/CuraIndstillingsVejledning"
     },
-    "description": "Provides extra information and explanations about settings in Cura, with images and animations.",
-    "display_name": "${SETTINGSGUIDE_PLUGIN_NAME}",
-    "package_id": "SettingsGuide",
+    "description": "Opslagsværk med uddybende forklaring af alle indstillinger i Cura. Teknisk, Teoretisk samt Forklaring.",
+    "display_name": "${CURAINDSTILLINGSVEJLEDNING_PLUGIN_NAME}",
+    "package_id": "curaIndstillingsVejledning",
     "package_type": "plugin",
-    "package_version": "${SETTINGSGUIDE_VERSION_MAJOR}.${SETTINGSGUIDE_VERSION_MINOR}.${SETTINGSGUIDE_VERSION_PATCH}",
+    "package_version": "${CURAINDSTILLINGSVEJLEDNING_VERSION_MAJOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_MINOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_PATCH}",
     "sdk_version": 5,
     "sdk_version_semver": "${sdk_version}",
-    "website": "https://github.com/Ghostkeeper/SettingsGuide"
+    "website": "https://github.com/L4ndbo/CuraIndstillingsVejledning"
 }
