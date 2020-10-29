@@ -1,146 +1,146 @@
 {
-	"name": "Settings Guide",
-	"version": 2,
+	"name": "Cura Indstillings Vejledning",
+	"version": 1,
 	"inherits": "fdmprinter",
 	"metadata": {
 		"type": "machine",
-		"author": "Ghostkeeper",
-		"manufacturer": "Ghostkeeper",
+		"author": "L4ndbo",
+		"manufacturer": "L4ndbo",
 		"visible": false,
 		"position": 0
 	},
 	"settings": {
 		"troubleshooting": {
-			"label": "Troubleshooting",
+			"label": "Fejlfinding",
 			"type": "category",
-			"description": "Various ways in which a print could fail and how to remedy them using Cura settings.",
+			"description": "Forskellige måder, hvorpå et print kunne mislykkes, og hvordan man afhjælper dem ved hjælp af baggrundsviden/research og ændret Cura indstillinger.",
 			"icon": "warning",
 			"children": {
 				"aliasing": {
 					"label": "Aliasing",
-					"description": "Limited stepper resolution is producing a jagged pattern in straight walls.",
+					"description": "Begrænset trinopløsning producerer et takket mønster i lige vægge.",
 					"type": "str",
 					"default_value": ""
 				},
 				"bed_adhesion_problems": {
-					"label": "Bed Adhesion Problems",
-					"description": "The print got loose from the build plate while the print was still going on.",
+					"label": "Problemer med vedhæftning til byggeplade / hotbed",
+					"description": "printet er løsnet fra byggepladen, mens printet var igang.",
 					"type": "str",
 					"default_value": ""
 				},
 				"blobs": {
 					"label": "Blobs",
-					"description": "Small specs on the walls.",
+					"description": "Små ujænvnheder på inder og/eller de ydre vægge.",
 					"type": "str",
 					"default_value": ""
 				},
 				"elephants_foot": {
-					"label": "Elephant's Foot",
-					"description": "The bottom layer(s) of the print is a bit wider than the rest.",
+					"label": "Elephantfod (Elephant´s Foot)",
+					"description": "Det nederste lag af printet er lidt bredere end resten.",
 					"type": "str",
 					"default_value": ""
 				},
 				"layer_shift": {
-					"label": "Layer Shift",
+					"label": "Lagskigt (Layer Shift)",
 					"description": "Layers are not properly stacked on top of each other.",
 					"type": "str",
 					"default_value": ""
 				},
 				"missing_parts": {
-					"label": "Missing Parts",
-					"description": "Some parts of the model are missing from the final print.",
+					"label": "Manglende dele",
+					"description": "Nogle dele af modellen mangler i det endelige udprint.",
 					"type": "str",
 					"default_value": ""
 				},
 				"overextrusion": {
-					"label": "Overextrusion",
-					"description": "Too much material is being extruded, causing the surface to become irregular and rough.",
+					"label": "Overekstrudering (Over extrusion)",
+					"description": "Der ekstruderes for meget materiale, hvilket får overfladen til at blive uregelmæssig og ru.",
 					"type": "str",
 					"default_value": ""
 				},
 				"pillowing": {
-					"label": "Pillowing",
-					"description": "The top side is showing bulges or holes in between the infill lines.",
+					"label": "Pudeeffekt (Pillowing)",
+					"description": "Den øverste side viser buler eller huller imellem påfyldningslinierne.",
 					"type": "str",
 					"default_value": ""
 				},
 				"ringing": {
-					"label": "Ringing",
-					"description": "There is a ripple effect on flat surfaces next to small details.",
+					"label": "krusningseffekt (Ringing)",
+					"description": "Der er en krusningseffekt på flade overflader ved siden af små detaljer.",
 					"type": "str",
 					"default_value": ""
 				},
 				"sagging": {
-					"label": "Sagging",
-					"description": "Overhanging areas droop down.",
+					"label": "over/udhæng er grimme (Sagging)",
+					"description": "Over/udhængsområder falder ned.",
 					"type": "str",
 					"default_value": ""
 				},
 				"scarring": {
-					"label": "Scarring",
-					"description": "There are visible lines on the top or bottom side that don't belong to the top/bottom pattern.",
+					"label": "Ardannelse (Scarring)",
+					"description": "Der er synlige linjer på toppen eller undersiden, der ikke hører til top / bund mønsteret.",
 					"type": "str",
 					"default_value": ""
 				},
 				"seam": {
-					"label": "Seam",
-					"description": "A surface defect where the contour is started and closed.",
+					"label": "Søm/samlinger (Seams)",
+					"description": "En overfladefejl, hvor konturen startes og lukkes.",
 					"type": "str",
 					"default_value": ""
 				},
 				"stringing": {
 					"label": "Stringing",
-					"description": "There are strings of plastic in places where the nozzle travels from one place to another.",
+					"description": "Der er plaststrenge på steder, hvor dysen bevæger sig fra et sted til et andet.",
 					"type": "str",
 					"default_value": ""
 				},
 				"topography": {
-					"label": "Topography",
-					"description": "The borders between the layers are visible on the top or bottom side.",
+					"label": "Topografi",
+					"description": "Kanterne mellem lagene er synlige på toppen eller undersiden.",
 					"type": "str",
 					"default_value": ""
 				},
 				"underextrusion": {
-					"label": "Underextrusion",
-					"description": "The printer is not extrusing enough material to make a strong, solid object.",
+					"label": "Underekstrudering (Underextrusion)",
+					"description": "Printeren ekstruderer ikke nok materiale til at skabe en stærk og solid overflade som gør printet svagt/skørt.",
 					"type": "str",
 					"default_value": ""
 				},
 				"unfinished_print": {
-					"label": "Unfinished Print",
-					"description": "The print is only partly completed.",
+					"label": "Ufærdig udprint",
+					"description": "Udprint er kun delvist afsluttet.",
 					"type": "str",
 					"default_value": ""
 				},
 				"warping": {
-					"label": "Warping",
-					"description": "The print curls up due to shrinkage when it cools down.",
+					"label": "Vridning (Warping)",
+					"description": "Udskriften krøller op på grund af svind, når det køler ned.",
 					"type": "str",
 					"default_value": ""
 				}
 			}
 		},
 		"about": {
-			"label": "About",
+			"label": "Om",
 			"type": "category",
-			"description": "About this plug-in",
+			"description": "Om dette plug-in",
 			"icon": "info",
 			"children": {
 				"glossary": {
-					"label": "Glossary",
-					"description": "Terminology used by Cura.",
+					"label": "Ordliste",
+					"description": "Terminologi brugt af Cura.",
 					"type": "str",
 					"default_value": ""
 				},
 				"preferences": {
-					"label": "Preferences",
-					"description": "Adjust the behaviour of this plug-in.",
+					"label": "Præferencer",
+					"description": "Ændre indstiller for dette plug-in.",
 					"type": "str",
 					"default_value": ""
 				},
 				"contributors": {
-					"label": "Contributors",
-					"description": "Everyone that helped in creating this plug-in.",
+					"label": "Bidragydere",
+					"description": "Alle, der hjalp med at oprette dette plug-in.",
 					"type": "str",
 					"default_value": ""
 				}
