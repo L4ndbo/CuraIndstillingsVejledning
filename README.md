@@ -1,32 +1,29 @@
-Settings Guide
-====
-This Cura plug-in provides additional explanations with pictures and animations for many Cura settings.
 
-![Example](example.png)
+Cura Indstillings Vejledning
+====
+Dette Cura-plug-in giver en dybere teoritisk forklaring, med animationer til alle Cura 4.7 indstillinger.
+
+! [Eksempel] (eksempel.png)
 
 Installation
 ----
-You can install this plug-in in several ways.
-1. **Marketplace:** In Cura, go to the Marketplace and find the Settings Guide in the list. Click it, then click on "install" and restart Cura.
-2. **From package:** Go to the [releases](https://github.com/Ghostkeeper/SettingsGuide/releases) page and download the latest release. Select the SDK version that fits your version of Cura:
+Du kan installere dette plugin på flere måder.
 
-    |Cura version|SDK|
-    |------------|---|
-    |4.0         |6.0|
-    |4.1         |6.0|
-    |4.2         |6.0|
-    |4.3         |6.0|
-    |4.4         |7.0|
-    |4.5         |7.0|
-    |4.6         |7.0|
-    |4.7         |7.0|
+1. ** Markedsplads: ** I Cura skal du gå ind på Markedspladsen og lede/søge efter "CuraIndstillingVvejledningen pluginét på listen. Klik på den, og derefter klik på knappen "install". Når du har indstalleret dette plugin igennem Cura bliver du bedt om at genstarte Cura. Dette gør du ved at afslutte/lukke Cura Programmet og åbne det igen. Bliver du ikke bedt om at afslutte/lukke Cura, anbefales det at du gør det alligevel.
 
-    Drag that package file onto the Cura window, then restart Cura.
-3. **Building packages:** Download the latest source code [from Github](https://github.com/Ghostkeeper/SettingsGuide/archive/master.zip), then in a terminal run `cmake . && make pack` to create a .curapackage file for each supported SDK version. Similar to the previous option, select the SDK version that fits your version of Cura and drag it onto the Cura window, then restart Cura.
-4. **From source:** Download the latest source code [from Github](https://github.com/Ghostkeeper/SettingsGuide/archive/master.zip). In Cura, click on "Help", "Show configuration folder". Navigate to the "plugins" subfolder and unpack the .zip file from Github there. Rename the folder to "SettingsGuide2" (removing any suffix that Github added such as "-master"). Rename the `plugin.json.in` file to simply `plugin.json` and fill in the CMake variables inside. Restart Cura.
+2. ** Download Github udvidelsespakken her: Gå til [https://github.com/L4ndbo/CuraIndstillingsVejledning/tree/master) og download den seneste udgivelse.
 
-Usage
+Vælg derefter den SDK-version, der passer til din version af Cura:
+
+| Cura-version | SDK |
+| ------------ | --- |
+| ---- 4.7 --- | 7.0 | <--- Nyeste version 29/10/2020
+
+Træk denne pakkefil til Cura-vinduet, og genstart derefter Cura.
+ 
+
+Anvendelse
 ----
-To use this plug-in, right click on a setting you'd like to know more about. Then click "Settings Guide".
+For at bruge dette plugin skal du højreklikke på en indstilling, du gerne vil vide mere om. Klik derefter på "CuraIndstillingsvejledning".
 
-Alternatively, click on "Extensions" in the application menu, then click on "Settings Guide".
+Alternativt kan du klikke på "Udvidelser" i applikationsmenuen og derefter klikke på "CuraIndstillingsvejledning".
