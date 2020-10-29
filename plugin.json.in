@@ -1,8 +1,8 @@
 {
-	"name": "${SETTINGSGUIDE_PLUGIN_NAME}",
-	"author": "Ghostkeeper",
-	"version": "${SETTINGSGUIDE_VERSION_MAJOR}.${SETTINGSGUIDE_VERSION_MINOR}.${SETTINGSGUIDE_VERSION_PATCH}",
-	"description": "Provides extra information and explanations about settings in Cura, with images and animations.",
+	"name": "${CURAINDSTILLINGSVEJLEDNING_PLUGIN_NAME}",
+	"author": "L4ndbo",
+	"version": "${CURAINDSTILLINGSVEJLEDNING_VERSION_MAJOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_MINOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_PATCH}",
+	"description": "Opslagsværk med uddybende forklaring af alle indstillinger i Cura. Teknisk, Teoretisk tekster med billeder samt Forklaring af print problemer.",
 	"api": 6,
 	"supported_sdk_versions": ["6.0.0", "7.0.0"]
 }
