@@ -1,5 +1,6 @@
 #Copyright (C) 2018 Aleksei Sasin
 #Copyright (C) 2020 Ghostkeeper
+#Copyright (C) 2020 L4ndbo
 #This plug-in is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 #This plug-in is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for details.
 #You should have received a copy of the GNU Affero General Public License along with this plug-in. If not, see <https://gnu.org/licenses/>.
@@ -27,10 +28,9 @@ from . import MenuItemHandler  # To register the context menu item in the settin
 from . import QtMarkdownRenderer  # To match Mistune's output to Qt's supported HTML subset.
 from .Mistune import mistune  # To parse the Markdown files.
 
-class CuraSettingsGuide(Extension, QObject):
+class CuraIndstillingsVejledning(Extension, QObject):
 	"""
-	The main manager and entry point for the Cura Settings Guide.
-
+	The main manager and entry point for the Cura Indstillings Vejledning
 	This adds a menu item to the extensions menu and to the context menu of
 	every article. It creates a dialogue window to display the guide in, and
 	makes the menu items open said dialogue window.
@@ -51,8 +51,8 @@ class CuraSettingsGuide(Extension, QObject):
 		QObject.__init__(self, parent)
 		Extension.__init__(self)
 
-		self.setMenuName("Ѕettings Guide")  # Using Cyrillic Ѕ instead of normal S to prevent MacOS detecting the word "setting" and pulling this menu item out of context.
-		self.addMenuItem("Ѕettings Guide", self.startWelcomeGuide)
+		self.setMenuName("Cura Indstillings Vejledning")  # Using Cyrillic Ѕ instead of normal S to prevent MacOS detecting the word "setting" and pulling this menu item out of context.
+		self.addMenuItem("Cura Indstillings Vejledning", self.startWelcomeGuide)
 		self._dialog = None  # Cached instance of the dialogue window.
 		self.definition_container = None  # Setting definitions that provide not only the normal settings but also the extra articles added by this guide.
 
@@ -67,16 +67,16 @@ class CuraSettingsGuide(Extension, QObject):
 		# Add context menu item to the settings list to open the guide for that setting.
 		application = CuraApplication.getInstance()
 		application.getCuraAPI().interface.settings.addContextMenuItem({
-			"name": "Settings Guide",
+			"name": "Cura Indstillings Vejledning",
 			"icon_name": "help-contents",
 			"actions": ["sidebarMenuItemOnClickHandler"],
 			"menu_item": MenuItemHandler.MenuItemHandler(self)
 		})
 
 		preferences = application.getPreferences()
-		preferences.addPreference("settings_guide/language", "cura_default")
-		preferences.addPreference("settings_guide/show+articles+in+setting+tooltips+%28requires+restart%29", False)
-		preferences.addPreference("settings_guide/window+always+in+front", False)
+		preferences.addPreference("cura_indstillings_vejledning/language", "cura_default")
+		preferences.addPreference("cura_indstillings_vejledning/show+articles+in+setting+tooltips+%28requires+restart%29", False)
+		preferences.addPreference("cura_indstillings_vejledning/window+always+in+front", False)
 
 		self.adjust_theme()
 		application.initializationFinished.connect(self.load_all_in_background)
@@ -87,15 +87,15 @@ class CuraSettingsGuide(Extension, QObject):
 		"""
 		application = CuraApplication.getInstance()
 		preferences = application.getPreferences()
-		if preferences.getValue("settings_guide/show+articles+in+setting+tooltips+%28requires+restart%29"):
+		if preferences.getValue("cura_indstillings_vejledning/show+articles+in+setting+tooltips+%28requires+restart%29"):
 			preferences.addPreference("general/theme", application.default_theme)
 			theme_name = preferences.getValue("general/theme")
-			if theme_name.endswith("_settingsguideadjust"):
+			if theme_name.endswith("_CuraIndstillingsVejledningadjust"):
 				return  # Already adjusted.
 			theme_path = Resources.getPath(Resources.Themes, theme_name)
 
 			# Create a new theme where we can adjust the tooltip.
-			new_theme_name = theme_name + "_settingsguideadjust"
+			new_theme_name = theme_name + "_CuraIndstillingsVejledningadjust"
 			new_theme_path = Resources.getStoragePath(Resources.Themes, new_theme_name)
 			try:
 				shutil.copytree(theme_path, new_theme_path)
@@ -131,7 +131,7 @@ class CuraSettingsGuide(Extension, QObject):
 			def __init__(self, guide):
 				"""
 				Creates the background task.
-				:param guide: The CuraSettingsGuide object which has the
+				:param guide: The CuraIndstillingsVejledning object which has the
 				function to call.
 				"""
 				self.guide = guide
@@ -158,9 +158,9 @@ class CuraSettingsGuide(Extension, QObject):
 		for article_id in self.article_locations:
 			for language in self.article_locations[article_id]:
 				self._getArticle(article_id, language)  # Load articles one by one.
-		if CuraApplication.getInstance().getPreferences().getValue("settings_guide/show+articles+in+setting+tooltips+%28requires+restart%29"):
+		if CuraApplication.getInstance().getPreferences().getValue("cura_indstillings_vejledning/show+articles+in+setting+tooltips+%28requires+restart%29"):
 			self.set_tooltips()
-		Logger.log("i", "Finished loading Settings Guide articles.")
+		Logger.log("i", "Færdig med at indlæse Artikler samt vejledning til Cura indstillinger.")
 
 	def load_definitions(self):
 		"""
@@ -184,7 +184,7 @@ class CuraSettingsGuide(Extension, QObject):
 		Set the tooltips to the contents of the articles in the current
 		language.
 		"""
-		language = CuraApplication.getInstance().getPreferences().getValue("settings_guide/language")
+		language = CuraApplication.getInstance().getPreferences().getValue("cura_indstillings_vejledning//language")
 		global_stack = CuraApplication.getInstance().getGlobalContainerStack()
 		if not global_stack:
 			return  # Fail.
@@ -194,7 +194,7 @@ class CuraSettingsGuide(Extension, QObject):
 				if language in self.articles_rich_text[article_id]:
 					definition._SettingDefinition__property_values["description"] = self.articles_rich_text[article_id][language]
 				else:
-					definition._SettingDefinition__property_values["description"] = self.articles_rich_text[article_id]["en_US"]  # English should always exist if there is a translation.
+					definition._SettingDefinition__property_values["description"] = self.articles_rich_text[article_id]["da_DK"]  # English should always exist if there is a translation.
 
 	def find_articles(self):
 		"""
@@ -210,7 +210,7 @@ class CuraSettingsGuide(Extension, QObject):
 				base_name, extension = os.path.splitext(filename)
 				if extension != ".md":
 					continue  # Only interested in article files.
-				result[base_name] = {"en_US": os.path.join(root, filename)}
+				result[base_name] = {"da_DK": os.path.join(root, filename)}
 
 		# Find the translated articles in the translations folder.
 		for language in os.listdir(os.path.join(os.path.dirname(__file__), "resources", "translations")):
@@ -240,14 +240,14 @@ class CuraSettingsGuide(Extension, QObject):
 		if self._dialog:  # Dialogue already open.
 			self._dialog.requestActivate()  # Bring focus to dialogue.
 			return
-		Logger.log("d", "Creating Settings Guide window.")
+		Logger.log("d", "Opretter Cura Indstillings Vejlednings vindue.")
 		plugin_path = PluginRegistry.getInstance().getPluginPath(self.getPluginId())
 		if plugin_path is None:
 			plugin_path = os.path.dirname(__file__)
 		path = os.path.join(plugin_path, "resources", "qml", "SettingsGuide.qml")
 		self._dialog = CuraApplication.getInstance().createQmlComponent(path, {"manager": self})
 		if not self._dialog:
-			Logger.log("e", "Unable to create settings guide dialogue.")
+			Logger.log("e", "Kunne ikke oprette Cura Indstillings Vejlednings dialog.")
 
 	def startWelcomeGuide(self) -> None:
 		"""
@@ -273,7 +273,7 @@ class CuraSettingsGuide(Extension, QObject):
 
 	currentArticleReset = pyqtSignal() #Signal to indicate that the article list should reset its current index.
 
-	def _getArticle(self, article_id, language="en_US") -> List[List[str]]:
+	def _getArticle(self, article_id, language="da_DK") -> List[List[str]]:
 		"""
 		Gets the rich text of a specified article.
 
@@ -293,7 +293,7 @@ class CuraSettingsGuide(Extension, QObject):
 		images_path = os.path.join(os.path.dirname(__file__), "resources", "articles", "images")
 		try:
 			if language not in self.article_locations[article_id]:
-				language = "en_US"  # Fall back to English if the preferred language is not available.
+				language = "da_DK"  # Fall back to English if the preferred language is not available.
 			markdown_file = self.article_locations[article_id][language]
 			with open(markdown_file, encoding="utf-8") as f:
 				markdown_str = f.read()
@@ -303,7 +303,7 @@ class CuraSettingsGuide(Extension, QObject):
 				markdown_str = self.definition_container.getProperty(article_id, "label") + "\n====\n"
 				markdown_str += "*" + self.definition_container.getProperty(article_id, "description") + "*"  # Use the setting description as fallback.
 			else:
-				markdown_str = "There is no article on this topic."
+				markdown_str = "Der er ingen artikel om dette emne."
 
 		if images_path not in self._markdown_per_folder:
 			renderer = QtMarkdownRenderer.QtMarkdownRenderer(images_path)
@@ -328,7 +328,7 @@ class CuraSettingsGuide(Extension, QObject):
 								rich_text = self._markdown_per_folder[images_path](part_between_checkboxes)
 								parts.append(["rich_text", rich_text])
 						else:  # if index2 == 1:
-							preference_key = "settings_guide/" + urllib.parse.quote_plus(part_between_checkboxes).lower()
+							preference_key = "cura_indstillings_vejledning/" + urllib.parse.quote_plus(part_between_checkboxes).lower()
 							parts.append(["checkbox", preference_key, part_between_checkboxes])
 			elif index % 3 == 1:
 				image_description = mistune.markdown(part_between_images)
@@ -408,7 +408,7 @@ class CuraSettingsGuide(Extension, QObject):
 		:return: The the currently selected article.
 		"""
 		preferences = CuraApplication.getInstance().getPreferences()
-		language = preferences.getValue("settings_guide/language")
+		language = preferences.getValue("cura_indstillings_vejledning/language")
 		if language == "cura_default":
 			language = preferences.getValue("general/language")
 		return self._getArticle(self._selected_article_id, language)
@@ -431,7 +431,7 @@ class CuraSettingsGuide(Extension, QObject):
 		:param language_code: The new language code.
 		"""
 		preferences = CuraApplication.getInstance().getPreferences()
-		preferences.setValue("settings_guide/language", language_code)
-		if preferences.getValue("settings_guide/show+articles+in+setting+tooltips+%28requires+restart%29"):
+		preferences.setValue("cura_indstillings_vejledning/language", language_code)
+		if preferences.getValue("cura_indstillings_vejledning/show+articles+in+setting+tooltips+%28requires+restart%29"):
 			self.set_tooltips()
 		self.selectedArticleChanged.emit()
