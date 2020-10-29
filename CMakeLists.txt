@@ -1,18 +1,19 @@
 #Copyright (C) 2020 Ghostkeeper
+#Copyright (C) 2020 L4ndbo
 #This plug-in is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 #This plug-in is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for details.
 #You should have received a copy of the GNU Affero General Public License along with this plug-in. If not, see <https://gnu.org/licenses/>.
 
-project(SettingsGuide)
+project(CuraIndstillingsVejledning)
 cmake_minimum_required(VERSION 3.10.2) #Oldest version it's been tested with.
 
 #Project metadata.
-set(SETTINGSGUIDE_PLUGIN_NAME "Settings Guide" CACHE STRING "The name of the plug-in in distribution.")
-set(SETTINGSGUIDE_PLUGIN_ID "SettingsGuide2" CACHE STRING "The plug-in ID of the installation in Cura.") #Needs to be '2' because the original plug-in ID was reserved by Asasin for his original version.
-set(SETTINGSGUIDE_VERSION_MAJOR 2 CACHE STRING "The major version number, indicating a backward compatibility break.")
-set(SETTINGSGUIDE_VERSION_MINOR 4 CACHE STRING "The minor version number, indicating a forward compatibility break.")
-set(SETTINGSGUIDE_VERSION_PATCH 0 CACHE STRING "The patch version number, indicating an incremental improvement without compatibility break.")
-set(SETTINGSGUIDE_SUPPORTED_SDKS "6.0.0;7.0.0" CACHE STRING "List of supported Cura SDK versions.")
+set(CURAINDSTILLINGSVEJLEDNING_PLUGIN_NAME "Cura Indstillings Vejledning" CACHE STRING "The name of the plug-in in distribution.")
+set(CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID "CuraIndstillingsVejledning1" CACHE STRING "The plug-in ID of the installation in Cura.") #Needs to be '2' because the original plug-in ID was reserved by Asasin for his original version.
+set(CURAINDSTILLINGSVEJLEDNING_VERSION_MAJOR 2 CACHE STRING "The major version number, indicating a backward compatibility break.")
+set(CURAINDSTILLINGSVEJLEDNING_VERSION_MINOR 4 CACHE STRING "The minor version number, indicating a forward compatibility break.")
+set(CURAINDSTILLINGSVEJLEDNING_VERSION_PATCH 0 CACHE STRING "The patch version number, indicating an incremental improvement without compatibility break.")
+set(CURAINDSTILLINGSVEJLEDNING_SUPPORTED_SDKS "6.0.0;7.0.0" CACHE STRING "List of supported Cura SDK versions.")
 
 #Make sure we have Mistune.
 include(ExternalProject)
@@ -42,7 +43,7 @@ endif()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/plugin.json.in" plugin.json)
 set(installed_files
 	__init__.py
-	CuraSettingsGuide.py
+	CuraIndstillingsVejledning.py
 	LICENSE.md
 	MenuItemHandler.py
 	QtMarkdownRenderer.py
@@ -116,14 +117,14 @@ endforeach()
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${cura_directory}/${latest_version}/plugins" CACHE PATH "Location of the Cura plug-ins folder to install this plug-in to." FORCE)
 endif()
-install(FILES ${installed_paths} DESTINATION ${SETTINGSGUIDE_PLUGIN_ID})
-install(FILES ${installed_paths_resources} DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources)
-install(FILES ${installed_paths_resources_icons} DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources/icons)
-install(FILES ${installed_paths_resources_qml} DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources/qml)
-install(FILES ${installed_paths_resources_qml_SidebarSettings} DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources/qml/SidebarSettings)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/articles" DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/translations" DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/resources)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/mistune.py" DESTINATION ${SETTINGSGUIDE_PLUGIN_ID}/Mistune)
+install(FILES ${installed_paths} DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID})
+install(FILES ${installed_paths_resources} DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources)
+install(FILES ${installed_paths_resources_icons} DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/icons)
+install(FILES ${installed_paths_resources_qml} DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml)
+install(FILES ${installed_paths_resources_qml_SidebarSettings} DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml/SidebarSettings)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/articles" DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/translations" DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/mistune.py" DESTINATION ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/Mistune)
 
 #Packing this into a .curapackage file.
 add_custom_target(pack COMMAND "") #Packs for all supported SDK versions.
@@ -133,27 +134,27 @@ set(packaged_files
 	_rels
 	files
 )
-foreach(sdk_version ${SETTINGSGUIDE_SUPPORTED_SDKS})
+foreach(sdk_version ${CURAINDSTILLINGSVEJLEDNING_SUPPORTED_SDKS})
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/package.json.in" pack${sdk_version}/package.json)
 	add_custom_target(pack${sdk_version}
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths} files/plugins/${SETTINGSGUIDE_PLUGIN_ID}
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources} files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/icons
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_icons} files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/icons
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/qml
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_qml} files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/qml
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/qml/SidebarSettings
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_qml_SidebarSettings} files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/qml/SidebarSettings
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/resources/articles" files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/articles
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/resources/translations" files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/resources/translations
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths} files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources} files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/icons
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_icons} files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/icons
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_qml} files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml/SidebarSettings
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different ${installed_paths_resources_qml_SidebarSettings} files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/qml/SidebarSettings
+		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/resources/articles" files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/articles
+		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/resources/translations" files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/resources/translations
 		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/cmake/[Content_Types].xml" .
 		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/cmake/_rels" _rels
-		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/Mistune
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/mistune.py" files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/Mistune
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/LICENSE" files/plugins/${SETTINGSGUIDE_PLUGIN_ID}/Mistune
-		COMMAND ${CMAKE_COMMAND} -E tar cfv ../SettingsGuide${SETTINGSGUIDE_VERSION_MAJOR}.${SETTINGSGUIDE_VERSION_MINOR}.${SETTINGSGUIDE_VERSION_PATCH}-sdk${sdk_version}.curapackage --format=zip ${packaged_files}
+		COMMAND ${CMAKE_COMMAND} -E make_directory files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/Mistune
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/mistune.py" files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/Mistune
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/Mistune-prefix/src/Mistune/LICENSE" files/plugins/${CURAINDSTILLINGSVEJLEDNING_PLUGIN_ID}/Mistune
+		COMMAND ${CMAKE_COMMAND} -E tar cfv ../SettingsGuide${CURAINDSTILLINGSVEJLEDNING_VERSION_MAJOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_MINOR}.${CURAINDSTILLINGSVEJLEDNING_VERSION_PATCH}-sdk${sdk_version}.curapackage --format=zip ${packaged_files}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/pack${sdk_version}
 		DEPENDS Mistune
 	)
@@ -162,10 +163,10 @@ endforeach()
 
 #Let CPack find it.
 include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_VERSION_MAJOR ${SETTINGSGUIDE_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${SETTINGSGUIDE_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${SETTINGSGUIDE_VERSION_PATCH})
-set(CPACK_PACKAGE_NAME ${SETTINGSGUIDE_PLUGIN_NAME})
+set(CPACK_PACKAGE_VERSION_MAJOR ${CURAINDSTILLINGSVEJLEDNING_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${CURAINDSTILLINGSVEJLEDNING_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${CURAINDSTILLINGSVEJLEDNING_VERSION_PATCH})
+set(CPACK_PACKAGE_NAME ${CURAINDSTILLINGSVEJLEDNING_PLUGIN_NAME})
 set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README.md)
 set(CPACK_GENERATOR ZIP)
 include(CPack)
